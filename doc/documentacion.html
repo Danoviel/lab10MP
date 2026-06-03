@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Documentación — Clon de HBO Max en Flutter</title>
+<style>
+  @font-face { font-family:'Anton'; src:url('../assets/fonts/Anton-Regular.ttf'); }
+  @font-face { font-family:'Bebas'; src:url('../assets/fonts/BebasNeue-Regular.ttf'); }
+  @font-face { font-family:'Poppins'; src:url('../assets/fonts/Poppins-Regular.ttf'); font-weight:400; }
+  @font-face { font-family:'Poppins'; src:url('../assets/fonts/Poppins-SemiBold.ttf'); font-weight:600; }
+  @font-face { font-family:'Poppins'; src:url('../assets/fonts/Poppins-Bold.ttf'); font-weight:700; }
+
+  @page { size: A4; margin: 16mm 14mm; }
+
+  * { box-sizing: border-box; }
+  body {
+    font-family:'Poppins', Arial, sans-serif;
+    color:#1c1c22; margin:0; font-size:11.5px; line-height:1.55;
+  }
+  h1,h2,h3 { margin:0 0 .4em; }
+  .accent { color:#5C16C5; }
+
+  /* ---------- Portada ---------- */
+  .cover {
+    height: 257mm; display:flex; flex-direction:column; justify-content:center;
+    text-align:center;
+    background:linear-gradient(160deg,#120C1D 0%, #2a1b4d 60%, #5C16C5 130%);
+    color:#fff; border-radius:14px; padding:40px;
+  }
+  .cover .logo { font-family:'Anton'; font-size:74px; letter-spacing:2px; line-height:.9; }
+  .cover .logo small { display:block; font-family:'Bebas'; font-size:40px; letter-spacing:6px; font-weight:400; }
+  .cover h1 { font-size:26px; margin-top:34px; font-weight:700; }
+  .cover p { font-size:13px; color:#d9cffb; margin:4px 0; }
+  .cover .gh {
+    margin-top:30px; font-family:'Poppins'; font-size:12px;
+    background:rgba(255,255,255,.12); border:1px solid rgba(255,255,255,.3);
+    padding:10px 18px; border-radius:8px; display:inline-block; word-break:break-all;
+  }
+
+  .page { page-break-before: always; padding-top:4px; }
+
+  h2.sec {
+    font-family:'Bebas'; font-size:30px; letter-spacing:1.5px; color:#120C1D;
+    border-bottom:3px solid #5C16C5; padding-bottom:6px; margin-bottom:14px;
+  }
+  h2.sec .num {
+    background:#5C16C5; color:#fff; font-family:'Poppins'; font-weight:700;
+    font-size:14px; border-radius:6px; padding:2px 10px; margin-right:10px;
+    letter-spacing:0; vertical-align:middle;
+  }
+  h3.lbl {
+    font-family:'Poppins'; font-weight:700; font-size:12px; color:#5C16C5;
+    text-transform:uppercase; letter-spacing:.5px; margin:14px 0 4px;
+  }
+  p { margin:0 0 8px; text-align:justify; }
+  ul { margin:0 0 8px; padding-left:18px; }
+  li { margin-bottom:3px; }
+
+  /* ---------- Capturas ---------- */
+  .shots { display:flex; gap:14px; align-items:flex-start; margin-top:10px; }
+  .shots .desk { flex: 0 0 70%; }
+  .shots .mob  { flex: 0 0 calc(30% - 14px); }
+  figure { margin:0; }
+  figcaption {
+    font-family:'Poppins'; font-weight:600; font-size:10px; color:#666;
+    text-transform:uppercase; letter-spacing:.5px; margin-bottom:5px;
+  }
+  .shots img {
+    width:100%; border:1px solid #ddd; border-radius:6px; display:block;
+  }
+
+  .intro-card {
+    background:#f4f1fb; border-left:4px solid #5C16C5; border-radius:0 8px 8px 0;
+    padding:12px 16px; margin:10px 0 16px;
+  }
+  code { background:#efeefa; padding:1px 5px; border-radius:4px; font-size:10.5px; }
+
+  /* ---------- Conclusiones ---------- */
+  .concl { counter-reset: c; list-style:none; padding:0; }
+  .concl li {
+    position:relative; padding:10px 14px 10px 46px; margin-bottom:10px;
+    background:#f7f6fc; border-radius:8px;
+  }
+  .concl li::before {
+    counter-increment:c; content:counter(c);
+    position:absolute; left:12px; top:10px;
+    width:24px; height:24px; border-radius:50%;
+    background:#5C16C5; color:#fff; font-weight:700;
+    text-align:center; line-height:24px; font-size:13px;
+  }
+</style>
+</head>
+<body>
+
+<!-- ============ PORTADA ============ -->
+<div class="cover">
+  <div class="logo">HBO<small>max</small></div>
+  <h1>Documentación del Clon de HBO Max en Flutter</h1>
+  <p>Réplica de la interfaz web y móvil — escritorio y celular</p>
+  <p>David Carhuaz · Diseño y Desarrollo de Software</p>
+  <div class="gh">Repositorio: https://github.com/Danoviel/lab10MP.git</div>
+</div>
+
+<!-- ============ INTRODUCCIÓN / ARQUITECTURA ============ -->
+<section class="page">
+  <h2 class="sec"><span class="num">01</span> Introducción y arquitectura</h2>
+
+  <div class="intro-card">
+    Para construir el clon se realizó un <strong>scraping de la página oficial de
+    HBO Max (Perú)</strong> con el fin de analizar su estructura, su paleta de
+    colores, sus tipografías y la disposición de cada sección, tanto en la vista
+    de <strong>escritorio</strong> como en la de <strong>móvil</strong>. Con esa
+    información se reconstruyó la interfaz desde cero en Flutter.
+  </div>
+
+  <h3 class="lbl">Tecnologías utilizadas</h3>
+  <ul>
+    <li><strong>Flutter (Dart)</strong> con componentes <strong>Material 3</strong>.</li>
+    <li>Diseño <strong>responsive</strong>: un mismo código se adapta a escritorio
+      (varias columnas, ancho centrado) y a móvil (una columna, menú hamburguesa).</li>
+    <li>Tres tipografías con propósito: <strong>Anton</strong> (títulos de impacto),
+      <strong>Bebas Neue</strong> (etiquetas y categorías) y <strong>Poppins</strong>
+      (texto general).</li>
+    <li>Imágenes propias integradas como recursos del proyecto, en lugar de las
+      imágenes originales con derechos de autor.</li>
+  </ul>
+
+  <h3 class="lbl">Estructura del proyecto (arquitectura por capas)</h3>
+  <ul>
+    <li><code>theme/</code> — colores, tema oscuro y tipografías centralizados.</li>
+    <li><code>responsive/</code> — puntos de quiebre (escritorio / tablet / móvil).</li>
+    <li><code>models/</code> — objetos de datos (planes, pósters, géneros, FAQ).</li>
+    <li><code>data/</code> — contenido estático extraído del scraping.</li>
+    <li><code>widgets/</code> — cada sección de la página como componente aislado.</li>
+    <li><code>screens/</code> — la pantalla principal que arma todas las secciones.</li>
+  </ul>
+  <p>Esta separación evita repetir código, facilita el mantenimiento y permite que
+  cada sección se entienda y modifique por separado.</p>
+</section>
+
+<!-- ============ SECCIÓN 1: NAV + HERO ============ -->
+<section class="page">
+  <h2 class="sec"><span class="num">02</span> Barra de navegación y Hero</h2>
+
+  <h3 class="lbl">Estructura</h3>
+  <p>Una barra superior que queda fija al hacer scroll, con el logotipo, los enlaces
+  del catálogo y los botones de cuenta. Debajo, el <em>hero</em> a casi pantalla
+  completa: un mosaico de fondo, el logotipo grande, el precio de entrada y el botón
+  de suscripción. En móvil la barra colapsa a un menú hamburguesa y el hero reduce su
+  altura.</p>
+
+  <h3 class="lbl">Qué se usó y por qué</h3>
+  <p>Se empleó un <code>CustomScrollView</code> con un encabezado fijo para la barra.
+  El mosaico del fondo se recreó con una cuadrícula de bloques con degradado, sobre la
+  que se aplica una capa oscura para que el texto tenga contraste. El menú móvil usa un
+  <code>Drawer</code> lateral. La paleta (fondo <code>#120C1D</code>, texto blanco) y la
+  disposición se tomaron del scraping de la página.</p>
+
+  <div class="shots">
+    <figure class="desk"><figcaption>Vista escritorio</figcaption><img src="img/d_01_nav_hero.png"></figure>
+    <figure class="mob"><figcaption>Vista móvil</figcaption><img src="img/m_01_nav_hero.png"></figure>
+  </div>
+</section>
+
+<!-- ============ SECCIÓN 2: PLANES ============ -->
+<section class="page">
+  <h2 class="sec"><span class="num">03</span> Elige el mejor plan para ti</h2>
+
+  <h3 class="lbl">Estructura</h3>
+  <p>Un título centrado, un selector de facturación (Anual / Mensual) y tres tarjetas
+  de plan (Básico, Estándar, Platino) con su precio, beneficios y botón de selección.
+  En escritorio se muestran en fila e igualan su altura; en móvil se apilan en una
+  columna.</p>
+
+  <h3 class="lbl">Qué se usó y por qué</h3>
+  <p>Las tarjetas usan una fila con altura intrínseca para igualarse a la más alta en
+  escritorio, y una columna en móvil. El selector funciona con estado local. Los precios
+  y beneficios se obtuvieron del scraping. El título usa la tipografía <strong>Anton</strong>
+  para dar el aspecto de cartel característico.</p>
+
+  <div class="shots">
+    <figure class="desk"><figcaption>Vista escritorio</figcaption><img src="img/d_02_planes.png"></figure>
+    <figure class="mob"><figcaption>Vista móvil</figcaption><img src="img/m_02_planes.png"></figure>
+  </div>
+</section>
+
+<!-- ============ SECCIÓN 3: DESTACADOS ============ -->
+<section class="page">
+  <h2 class="sec"><span class="num">04</span> Destacados — imágenes y tipografías</h2>
+
+  <h3 class="lbl">Estructura</h3>
+  <p>Una etiqueta de sección, un banner destacado horizontal con imagen de fondo y,
+  debajo, un carrusel de "héroes". Es la sección donde se integran las imágenes propias
+  y donde mejor se aprecian las tres tipografías trabajando juntas.</p>
+
+  <h3 class="lbl">Qué se usó y por qué</h3>
+  <p>Las imágenes propias se muestran en formato horizontal recortadas para llenar su
+  espacio. Sobre la imagen del banner se aplican degradados para que el texto sea legible.
+  Las tres tipografías aparecen con un rol claro: <strong>Anton</strong> en el título,
+  <strong>Bebas Neue</strong> en las etiquetas y <strong>Poppins</strong> en la descripción
+  y el botón. El carrusel es una lista horizontal desplazable.</p>
+
+  <div class="shots">
+    <figure class="desk"><figcaption>Vista escritorio</figcaption><img src="img/d_03_destacados.png"></figure>
+    <figure class="mob"><figcaption>Vista móvil</figcaption><img src="img/m_03_destacados.png"></figure>
+  </div>
+</section>
+
+<!-- ============ SECCIÓN 4: GÉNEROS ============ -->
+<section class="page">
+  <h2 class="sec"><span class="num">05</span> Géneros</h2>
+
+  <h3 class="lbl">Estructura</h3>
+  <p>Un texto de cierre y una cuadrícula de ocho tiles de género tipo cartel, cada uno
+  con su categoría arriba y el título del contenido abajo. Cuatro columnas en escritorio
+  y dos en móvil.</p>
+
+  <h3 class="lbl">Qué se usó y por qué</h3>
+  <p>Se usó una cuadrícula cuyo número de columnas cambia según el ancho de la pantalla.
+  Cada tile lleva un degradado de color y su categoría se rotula con la tipografía
+  <strong>Bebas Neue</strong>. Las categorías y títulos provienen del scraping de la página.</p>
+
+  <div class="shots">
+    <figure class="desk"><figcaption>Vista escritorio</figcaption><img src="img/d_04_generos.png"></figure>
+    <figure class="mob"><figcaption>Vista móvil</figcaption><img src="img/m_04_generos.png"></figure>
+  </div>
+</section>
+
+<!-- ============ SECCIÓN 5: ESTRENOS ============ -->
+<section class="page">
+  <h2 class="sec"><span class="num">06</span> Estrenos de los que no pararás de hablar</h2>
+
+  <h3 class="lbl">Estructura</h3>
+  <p>Un título centrado, una cuadrícula 3×2 de tarjetas horizontales (formato 16:9) y un
+  botón de suscripción abajo a la izquierda. En móvil la cuadrícula pasa a una sola columna
+  y el botón se centra.</p>
+
+  <h3 class="lbl">Qué se usó y por qué</h3>
+  <p>Se construyó una cuadrícula reutilizable, con relación de aspecto 16:9 y columnas
+  que se ajustan al tamaño de pantalla; la misma se reutiliza en la sección siguiente.
+  Las imágenes propias se muestran como recursos del proyecto. La disposición se ajustó
+  para coincidir exactamente con la de la página real.</p>
+
+  <div class="shots">
+    <figure class="desk"><figcaption>Vista escritorio</figcaption><img src="img/d_05_estrenos.png"></figure>
+    <figure class="mob"><figcaption>Vista móvil</figcaption><img src="img/m_05_estrenos.png"></figure>
+  </div>
+</section>
+
+<!-- ============ SECCIÓN 6: DESCUBRE ============ -->
+<section class="page">
+  <h2 class="sec"><span class="num">07</span> Descubre lo mejor en</h2>
+
+  <h3 class="lbl">Estructura</h3>
+  <p>Un título, una navegación de pestañas tipo carrusel (la del centro grande y en blanco,
+  las vecinas difuminadas, con flechas a los lados) y debajo la misma cuadrícula 3×2, que
+  cambia su contenido al elegir otra pestaña. En móvil las pestañas se reducen y la
+  cuadrícula pasa a una sola columna.</p>
+
+  <h3 class="lbl">Qué se usó y por qué</h3>
+  <p>La pestaña seleccionada se maneja con estado local y rota la lista de tarjetas. Las
+  flechas son botones de icono y las etiquetas cambian de tamaño y opacidad según estén
+  seleccionadas o no. Se reutiliza la cuadrícula de la sección anterior. El patrón se tomó
+  del scraping de la página.</p>
+
+  <div class="shots">
+    <figure class="desk"><figcaption>Vista escritorio</figcaption><img src="img/d_06_descubre.png"></figure>
+    <figure class="mob"><figcaption>Vista móvil</figcaption><img src="img/m_06_descubre.png"></figure>
+  </div>
+</section>
+
+<!-- ============ SECCIÓN 7: FAQ + FOOTER ============ -->
+<section class="page">
+  <h2 class="sec"><span class="num">08</span> Preguntas frecuentes y pie de página</h2>
+
+  <h3 class="lbl">Estructura</h3>
+  <p>El logotipo, un acordeón de preguntas frecuentes que se expanden y colapsan y, al
+  final, el pie de página con enlaces de navegación, enlaces legales, el aviso de copyright
+  e iconos de redes sociales.</p>
+
+  <h3 class="lbl">Qué se usó y por qué</h3>
+  <p>El acordeón usa un componente expansible nativo. Los enlaces del pie se reacomodan
+  automáticamente según el ancho disponible. Los iconos provienen del set de Material. Todos
+  los textos se obtuvieron del scraping de la página.</p>
+
+  <div class="shots">
+    <figure class="desk"><figcaption>Vista escritorio</figcaption><img src="img/d_07_faq_footer.png"></figure>
+    <figure class="mob"><figcaption>Vista móvil</figcaption><img src="img/m_07_faq_footer.png"></figure>
+  </div>
+</section>
+
+<!-- ============ CONCLUSIONES ============ -->
+<section class="page">
+  <h2 class="sec"><span class="num">09</span> Conclusiones</h2>
+  <ol class="concl">
+    <li>El <strong>scraping</strong> de la página oficial permitió replicar con fidelidad su
+      estructura, su paleta de colores y sus tipografías, en escritorio y en móvil.</li>
+    <li>La <strong>arquitectura por capas</strong> (tema, datos, widgets y pantallas) mantuvo
+      el código ordenado, sin repeticiones y fácil de modificar.</li>
+    <li>El <strong>diseño responsive</strong> con puntos de quiebre logra una vista distinta
+      y apropiada para escritorio y para móvil con un solo código base.</li>
+    <li>El uso de <strong>tres tipografías con propósito</strong> (Anton, Bebas Neue y Poppins)
+      aporta la jerarquía visual propia de una plataforma de streaming.</li>
+    <li>Sustituir las imágenes originales por <strong>recursos propios</strong> mantiene el
+      proyecto limpio, reutilizable y libre de problemas de derechos de autor.</li>
+  </ol>
+
+  <div class="intro-card" style="margin-top:24px">
+    <strong>Repositorio del proyecto:</strong><br>
+    https://github.com/Danoviel/lab10MP.git
+  </div>
+</section>
+
+</body>
+</html>
